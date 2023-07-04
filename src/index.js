@@ -5,9 +5,9 @@ const userRouter = require("./routes/user.routes");
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
-connectDB(process.env.MONGO_URI);
+connectDB();
 
 app.use(express.json());
 app.use("/User", userRouter);
