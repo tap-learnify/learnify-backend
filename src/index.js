@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 const express = require("express");
-const mongoose = require("mongoose");
+const connectDB = require("./config/database");
 const userRouter = require("./routes/user.routes");
 
 dotenv.config();
@@ -16,4 +16,4 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "I am running" });
 });
 
-app.listen(PORT, () => console.log(`Server is running on port ${port}`));
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
