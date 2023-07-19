@@ -10,8 +10,8 @@
 
 To install and set up the project, follow these steps:
 
-1. Clone the repository to your local machine: `git clone https://github.com/davidumoru/staffVerify.git`
-2. Navigate to the project directory `cd staffVerify`
+1. Clone the repository to your local machine: `git clone https://github.com/tap-learnify/learnify-backend.git`
+2. Navigate to the project directory `cd learnify-backend`
 3. Run `npm install` to install the project dependencies.
 
 ## Usage
@@ -40,7 +40,7 @@ The project includes the following endpoints:
 ```
 {
   "message": "User created successfully",
-  "token": "asdf.lkjhglkjhgas.dBUAfkhbuBSOUu.piBSPPuihbu.WBhbhl_lbuyouVyvguougu"
+  "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
 ```
 
@@ -56,7 +56,7 @@ The project includes the following endpoints:
 ```
 {
   "message": "Staff created successfully",
-  "token": "asdf.lkjhglkjhgas.dBUAfkhbuBSOUu.piBSPPuihbu.WBhbhl_lbuyouVyvguougu"
+  "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
 ```
 
