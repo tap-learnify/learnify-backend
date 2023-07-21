@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.models");
+const response = require("../utils/response");
 
 async function signup(payload) {
   try {
@@ -8,10 +9,7 @@ async function signup(payload) {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return {
-        message: "User already exists",
-        statusCode: 400,
-      };
+      return response.buildFailureResponse("User already exists", 400);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,17 +30,10 @@ async function signup(payload) {
         expiresIn: "1h", // Adjust the expiration time as needed
       }
     );
-    return {
-      message: "User created successfully",
-      statusCode: 201,
-      data: { token },
-    };
+    return response.buildSuccessResponse("User created successfully", 201, {token});
   } catch (error) {
     console.error(error);
-    return {
-      message: "Server error",
-      statusCode: 500,
-    };
+    return response.buildFailureResponse("Server Error", 500);
   }
 }
 
@@ -52,28 +43,18 @@ async function login(payload) {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return {
-        message: "User not found",
-        statusCode: 404,
-      };
+      return response.buildFailureResponse("User not found", 400);
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return {
-        message: "Invalid credentials",
-        statusCode: 401,
-      };
+      return response.buildFailureResponse("Invalid Password", 403);
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
       expiresIn: "1h", // Adjust the expiration time as needed
     });
-    return {
-      message: "Login successful",
-      statusCode: 200,
-      data: { token },
-    };
+    return response.buildSuccessResponse("Login Successful", 200, {token});
   } catch (error) {
     console.error(error);
     return {
