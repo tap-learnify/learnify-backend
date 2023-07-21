@@ -46,4 +46,41 @@ async function signup(payload) {
   }
 }
 
+async function login(payload) {
+  try {
+    const { email, password } = payload;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return {
+        message: "User not found",
+        statusCode: 404,
+      };
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return {
+        message: "Invalid credentials",
+        statusCode: 401,
+      };
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1h", // Adjust the expiration time as needed
+    });
+    return {
+      message: "Login successful",
+      statusCode: 200,
+      data: { token },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      message: "Server error",
+      statusCode: 500,
+    };
+  }
+}
+
 module.exports = { signup, login };
