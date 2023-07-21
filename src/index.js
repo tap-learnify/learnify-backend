@@ -18,6 +18,12 @@ mongoose
     process.exit(1);
   });
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+      message: "I am running"
+  })
+})
+
 app.use('/User', UserRouter);
 
 const port = process.env.PORT || 5000;
