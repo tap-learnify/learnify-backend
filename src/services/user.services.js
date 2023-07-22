@@ -98,5 +98,26 @@ const forgotPassword = async (payload) => {
   }
 };
 
+async function resetPassword (payload) {
+  const { email, resetPin, newPassword } = payload;
 
-module.exports = { signup, login, forgotPassword };
+  try {
+    const foundUser = await User.findOne({ email });
+
+    if (!foundUser || foundUser.resetPin !== resetPin) {
+      return response.buildFailureResponse("Invalid reset PIN", 400)
+    }
+
+    // Update the user's password and resetPin
+    foundUser.password = newPassword;
+    foundUser.resetPin = undefined;
+    await foundUser.save();
+
+    return response.buildSuccessResponse("Password reset successful", 200);
+  } catch (error) {
+    console.error(error);
+    return response.buildFailureResponse("Internal Server Error", 500)
+  }
+};
+
+module.exports = { signup, login, forgotPassword, resetPassword };
