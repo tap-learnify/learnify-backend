@@ -15,4 +15,9 @@ const forgotPassword = async (req, res) => {
   res.status(data.statusCode).json(data)
 };
 
-module.exports = { signup, login, forgotPassword };
+const resetPassword = async (req, res) => {
+  const data = await userServices.resetPassword(req.body);
+  res.status(data.statusCode).json(data)
+};
+
+module.exports = { signup, login, forgotPassword, resetPassword };
