@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.models");
 const response = require("../utils/response");
 const Pin = require("../utils/generateRandomPin");
-const email = require("../utils/email");
+const mailUtil = require("../utils/email");
 
 async function signup(payload) {
   try {
@@ -101,7 +101,7 @@ const forgotPassword = async (payload) => {
     </div>
     </body>`;
 
-    await email.sendEmail(
+    await mailUtil.sendEmail(
       foundUser.email,
       emailSubject,
       emailText,
