@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.models");
 const response = require("../utils/response");
+const Pin = require("../utils/generateRandomPin");
+const email = require("../utils/email");
 
 async function signup(payload) {
   try {
@@ -64,4 +66,37 @@ async function login(payload) {
   }
 }
 
-module.exports = { signup, login };
+const forgotPassword = async (payload) => {
+  try {
+    // Find the user by email
+    const foundUser = await User.findOne({ email: payload.email });
+    if (!foundUser) {
+      return response.buildFailureResponse("Email not found", 404);
+    }
+
+    const resetPin = Pin.generateRandomPin();
+    foundUser.resetPin = resetPin;
+    await foundUser.save();
+
+    const emailSubject = "Forgot Password - Reset Pin";
+    const emailText = `You recently requested to reset your password.`;
+    const emailHtml = `
+      // ... (email template) ...
+    `;
+
+    await email.sendEmail(
+      foundUser.email,
+      emailSubject,
+      emailText,
+      emailHtml
+    );
+
+    return response.buildSuccessResponse("Password reset email sent", 200);
+  } catch (error) {
+    console.error(error);
+    return response.buildFailureResponse("Server Error", 500);
+  }
+};
+
+
+module.exports = { signup, login, forgotPassword };
