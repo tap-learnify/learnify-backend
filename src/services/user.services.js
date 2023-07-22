@@ -81,8 +81,25 @@ const forgotPassword = async (payload) => {
     const emailSubject = "Forgot Password - Reset Pin";
     const emailText = `You recently requested to reset your password.`;
     const emailHtml = `
-      // ... (email template) ...
-    `;
+    <body style="font-family: Arial, sans-serif; background-color: #f7f7f7; color: #333; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #fff;">
+      <div style="background-color: #1E2127; margin-bottom: 30px; padding: 15px;">
+        <p style="color: #F7FFF2; text-align: center;"><strong>.learnify</strong></p>
+      </div>
+      <h2 style="color: #007bff;">Reset Password</h2>
+      <p>Hello,</p>
+      <p>You've requested to reset the password linked with your Learnify account.</p>
+      <p>To confirm your request, please use the 6-digit code below:</p>
+      <div style="max-width: 400px; margin: 0 auto; padding: 15px; background-color: #007bff; color: #fff; text-align: center; font-size: 19px;">
+        Your Reset Pin: <strong>${resetPin}</strong>
+      </div>
+      <p>The reset pin will be valid for a limited time only. Please do not share this code with anyone. <strong>Don’t recognize this activity?</strong> Please ignore this email or contact <a href="/">customer support</a>.</p>
+      <p><em>This is an automated message, please do not reply.</em></p>
+      <p style="margin-top: 30px; text-align: center; font-size: small;">© 2023 Learnify, All Rights Reserved.</p>
+      <hr style="color: #007bff; border: 1.5px solid #007bff; margin: 20px 0;">
+      <p style="color: #007bff; text-align: center;"><strong>Stay Connected!</strong></p>
+    </div>
+    </body>`;
 
     await email.sendEmail(
       foundUser.email,
