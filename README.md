@@ -26,7 +26,7 @@ This will start the Express server, and the project will be accessible at the sp
 
 The project includes the following endpoints:
 
-### **POST** `/signup` - Authenticate an existing new user.
+### **POST** `/signup` - Authenticate a new user.
 **Request Body:**
 ```
 {
@@ -48,7 +48,7 @@ The project includes the following endpoints:
 }
 ```
 
-### **POST** `/login` - Create a new user.
+### **POST** `/login` - Authenticate an existing new user.
 **Request Body:**
 ```
 {
@@ -68,7 +68,7 @@ The project includes the following endpoints:
 }
 ```
 
-### **POST** `/forgot-password` - Get.
+### **POST** `/forgot-password` - Send password reset email.
 **Request Body:**
 ```
 {
@@ -84,7 +84,7 @@ The project includes the following endpoints:
 }
 ```
 
-### **POST** `/rest-password` - Get.
+### **POST** `/rest-password` - Reset user password.
 **Request Body:**
 ```
 {
@@ -147,7 +147,7 @@ The project includes the following endpoints:
 }
 ```
 
-### **GET** `/courses/search` - Search course title.
+### **GET** `/courses/search` - Search course by title.
 **Request Body:**
 `/api/courses/search?keyword=Frontend`
 **Response:**
