@@ -2,7 +2,7 @@
 
 # learnify-backend
 
-####  The repository holds the backend files for Learnify.
+#### The repository holds the backend files for Learnify.
 
 </div>
 
@@ -27,7 +27,9 @@ This will start the Express server, and the project will be accessible at the sp
 The project includes the following endpoints:
 
 ### **POST** `/signup` - Authenticate a new user.
+
 **Request Body:**
+
 ```
 {
   "firstName": "John",
@@ -36,7 +38,9 @@ The project includes the following endpoints:
   "password": "password"
 }
 ```
+
 **Response:**
+
 ```
 {
     "status": "success",
@@ -49,14 +53,18 @@ The project includes the following endpoints:
 ```
 
 ### **POST** `/login` - Authenticate an existing new user.
+
 **Request Body:**
+
 ```
 {
   "email": "admin@example.com",
   "password": "password",
 }
 ```
+
 **Response:**
+
 ```
 {
     "status": "success",
@@ -69,13 +77,17 @@ The project includes the following endpoints:
 ```
 
 ### **POST** `/forgot-password` - Send password reset email.
+
 **Request Body:**
+
 ```
 {
   "email": "admin@example.com"
 }
 ```
+
 **Response:**
+
 ```
 {
     "status": "success",
@@ -85,7 +97,9 @@ The project includes the following endpoints:
 ```
 
 ### **POST** `/rest-password` - Reset user password.
+
 **Request Body:**
+
 ```
 {
   "email": "john.doe@example.com",
@@ -93,7 +107,9 @@ The project includes the following endpoints:
   "newPassword": "new_secure_password"
 }
 ```
+
 **Response:**
+
 ```
 {
     "status": "success",
@@ -102,8 +118,10 @@ The project includes the following endpoints:
 }
 ```
 
-### **GET** `/courses/` - Fetch all courses.
+### **GET** `/courses` - Fetch all courses.
+
 **Response:**
+
 ```
 {
     "status": "success",
@@ -148,9 +166,11 @@ The project includes the following endpoints:
 ```
 
 ### **GET** `/courses/search` - Search course by title.
+
 **Request Body:**
 `/api/courses/search?keyword=Frontend`
 **Response:**
+
 ```
 {
     "status": "success",
