@@ -19,7 +19,6 @@ const searchCourse = async (query) => {
     const keyword = query.search
       ? {
           $or: [{ title: { $regex: query.search, $options: "i" } }],
-          course: query.course,
         }
       : {};
 
