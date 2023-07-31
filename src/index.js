@@ -15,7 +15,7 @@ connectDB(process.env.MONGO_URI);
 const userRouter = require("./routes/user.routes");
 const courseRouter = require("./routes/courses.routes");
 
-app.use("/user", userRouter);
+app.use("/", userRouter);
 app.use("/courses", courseRouter);
 
 const port = process.env.PORT || 5000;
