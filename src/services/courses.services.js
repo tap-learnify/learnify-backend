@@ -16,9 +16,9 @@ async function getAllCourses() {
 
 const searchCourse = async (query) => {
   try {
-    const keyword = query.search
+    const keyword = query.keyword
       ? {
-          $or: [{ title: { $regex: query.search, $options: "i" } }],
+          $or: [{ title: { $regex: query.keyword, $options: "i" } }],
         }
       : {};
 
@@ -26,6 +26,7 @@ const searchCourse = async (query) => {
     return responses.buildSuccessResponse("Course Fetched", 200, foundCourse);
   } catch (error) {
     console.log(error);
+    return responses.buildFailureResponse("Failed to fetch course", 500);
   }
 };
 
