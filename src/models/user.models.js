@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  resetPin: {
+    type: String,
+    default: null,
+  },
 });
 
 const User = mongoose.model('User', userSchema);
