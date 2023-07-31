@@ -87,7 +87,7 @@ const forgotPassword = async (payload) => {
         <p style="color: #F7FFF2; text-align: center;"><strong>.learnify</strong></p>
       </div>
       <h2 style="color: #007bff;">Reset Password</h2>
-      <p>Hello,</p>
+      <p>Hello ${foundUser.firstName},</p>
       <p>You've requested to reset the password linked with your Learnify account.</p>
       <p>To confirm your request, please use the 6-digit code below:</p>
       <div style="max-width: 400px; margin: 0 auto; padding: 15px; background-color: #007bff; color: #fff; text-align: center; font-size: 19px;">
@@ -125,8 +125,9 @@ async function resetPassword (payload) {
       return response.buildFailureResponse("Invalid reset PIN", 400)
     }
 
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
     // Update the user's password and resetPin
-    foundUser.password = newPassword;
+    foundUser.password = hashedNewPassword;
     foundUser.resetPin = undefined;
     await foundUser.save();
 
