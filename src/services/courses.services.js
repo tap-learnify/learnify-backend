@@ -1,4 +1,5 @@
 const responses = require("../utils/response");
+const Course = require("../models/courses.models");
 
 async function getAllCourses() {
   try {
