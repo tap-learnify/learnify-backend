@@ -39,8 +39,12 @@ The project includes the following endpoints:
 **Response:**
 ```
 {
-  "message": "User created successfully",
-  "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    "status": "success",
+    "message": "User created successfully",
+    "statusCode": 201,
+    "data": {
+        "token": "lWz9Xp4Bjgq2E6o8mS7nF1cU3dV5hRtAeGxYbZkWpQyJvHcMgTfNzXrCjIuLoOsD"
+    }
 }
 ```
 
@@ -55,8 +59,12 @@ The project includes the following endpoints:
 **Response:**
 ```
 {
-  "message": "Staff created successfully",
-  "token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    "status": "success",
+    "message": "Login Successful",
+    "statusCode": 200,
+    "data": {
+        "token": "lWz9Xp4Bjgq2E6o8mS7nF1cU3dV5hRtAeGxYbZkWpQyJvHcMgTfNzXrCjIuLoOsD"
+    }
 }
 ```
 
