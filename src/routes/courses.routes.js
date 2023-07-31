@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const coursesControllers = require('../controllers/courses.controllers');
+const courseControllers = require("../controllers/courses.controllers");
 
-router.get('/', coursesControllers.getAllCourses);
-router.get('/search', coursesControllers.searchCourses);
+router.get("/", courseControllers.getAllCourses);
+router.get("/search", courseControllers.searchCourses);
 
 module.exports = router;

@@ -1,22 +1,22 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
-const connectDB = require("./configs/database")
+const connectDB = require("./configs/database");
 
 const app = express();
 
 app.use(bodyParser.json());
 
 // connecting to db here
-connectDB(process.env.MONGO_URI)
+connectDB(process.env.MONGO_URI);
 
-const userRouter = require('./routes/user.routes');
-const coursesRouter = require('./routes/courses.routes');
+const userRouter = require("./routes/user.routes");
+const courseRouter = require("./routes/courses.routes");
 
-app.use('/user', userRouter);
-app.use('/courses', coursesRouter);
+app.use("/user", userRouter);
+app.use("/courses", courseRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
