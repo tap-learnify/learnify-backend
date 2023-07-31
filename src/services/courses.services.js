@@ -13,4 +13,20 @@ async function getAllCourses() {
   }
 }
 
-module.exports = { getAllCourses };
+const searchCourse = async (query) => {
+  try {
+    const keyword = query.search
+      ? {
+          $or: [{ title: { $regex: query.search, $options: "i" } }],
+          course: query.course,
+        }
+      : {};
+
+    const foundCourse = await Course.find(keyword);
+    return responses.buildSuccessResponse("Course Fetched", 200, foundCourse);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { getAllCourses, searchCourse };
