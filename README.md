@@ -96,7 +96,7 @@ The project includes the following endpoints:
 }
 ```
 
-### **POST** `/rest-password` - Reset user password.
+### **POST** `/reset-password` - Reset user password.
 
 **Request Body:**
 
