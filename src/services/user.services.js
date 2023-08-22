@@ -20,7 +20,7 @@ async function signup(payload) {
       firstName,
       lastName,
       email,
-      password: hashedPassword,
+      password: hashedPassword,  // Store the hashed password
     });
 
     await newUser.save();
@@ -29,7 +29,7 @@ async function signup(payload) {
       { userId: newUser._id },
       process.env.JWT_SECRET_KEY,
       {
-        expiresIn: "1h", // Adjust the expiration time as needed
+        expiresIn: "1h", // Token is valid for 1 hour
       }
     );
     return response.buildSuccessResponse("User created successfully", 201, {token});
@@ -54,7 +54,7 @@ async function login(payload) {
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h", // Adjust the expiration time as needed
+      expiresIn: "1h", // Token is valid for 1 hour
     });
     return response.buildSuccessResponse("Login Successful", 200, {token});
   } catch (error) {
