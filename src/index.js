@@ -11,6 +11,15 @@ app.use(bodyParser.json());
 // connecting to db here
 connectDB(process.env.MONGO_URI);
 
+// CORS configuration
+const corsOptions = {
+  origin: ['https://learnify-tap.netlify.app', 'http://localhost:3000'],
+  methods: 'GET,PUT,POST,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+};
+
+app.use(cors(corsOptions));
+
 const userRouter = require("./routes/user.routes");
 const courseRouter = require("./routes/courses.routes");
 
