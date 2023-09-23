@@ -30,4 +30,40 @@ const searchCourse = async (query) => {
   }
 };
 
-module.exports = { getAllCourses, searchCourse };
+async function rateCourse(payload) {
+  try {
+    const { courseId, studentId, rating } = payload;
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return { success: false, message: "Course not found." };
+    }
+
+    // Check if the student has already rated this course
+    const alreadyRated = course.rating.find((rating) =>
+      rating.student.equals(studentId)
+    );
+    if (alreadyRated) {
+      return { success: false, message: "You have already rated this course." };
+    }
+
+    // Add the student's rating to the course
+    course.rating.push({ student: studentId, value: rating });
+
+    // Calculate and update the average rating for the course
+    const totalRating = course.rating.reduce(
+      (sum, rating) => sum + rating.value,
+      0
+    );
+    course.rating = totalRating / course.rating.length;
+
+    await course.save();
+
+    return { success: true, message: "Course rated successfully.", course };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Internal server error." };
+  }
+}
+
+module.exports = { getAllCourses, searchCourse, rateCourse };
