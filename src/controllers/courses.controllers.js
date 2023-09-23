@@ -18,4 +18,13 @@ const searchCourses = async (req, res) => {
   }
 };
 
-module.exports = { getAllCourses, searchCourses };
+const rateCourse = async (req, res) => {
+  try {
+    const data = await courseServices.rateCourse(req.body);
+    res.status(data.statusCode).json(data);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+module.exports = { getAllCourses, searchCourses, rateCourse };
