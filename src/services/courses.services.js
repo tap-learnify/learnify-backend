@@ -1,7 +1,7 @@
 const responses = require("../utils/response");
 const Course = require("../models/courses.models");
 
-async function getAllCourses() {
+const getAllCourses = async () => {
   try {
     const companies = await Course.find();
     return responses.buildSuccessResponse(
@@ -12,7 +12,7 @@ async function getAllCourses() {
   } catch (error) {
     return responses.buildFailureResponse("Failed to fetch courses", 500);
   }
-}
+};
 
 const searchCourse = async (query) => {
   try {
@@ -30,14 +30,14 @@ const searchCourse = async (query) => {
   }
 };
 
-async function rateCourse(payload) {
+const rateCourse = async (payload) => {
   try {
     const { courseId, studentId, rating } = payload;
 
     // Find the course by ID
     const course = await Course.findById(courseId);
     if (!course) {
-      return { success: false, message: "Course not found." };
+      return responses.buildFailureResponse("Course not found", 404);
     }
 
     // Check if the student has already rated this course
@@ -46,15 +46,18 @@ async function rateCourse(payload) {
     );
 
     if (alreadyRated) {
-      return { success: false, message: "You have already rated this course." };
+      return responses.buildFailureResponse(
+        "You have already rated this course",
+        400
+      );
     }
 
     // Validate that the rating is between 1 and 5
     if (rating < 1 || rating > 5) {
-      return {
-        success: false,
-        message: "Invalid rating. Rating should be between 1 and 5.",
-      };
+      return responses.buildFailureResponse(
+        "Rating must be between 1 and 5",
+        400
+      );
     }
 
     // Add the student's rating to the course
@@ -69,11 +72,15 @@ async function rateCourse(payload) {
 
     await course.save();
 
-    return { success: true, message: "Course rated successfully.", course };
+    return responses.buildSuccessResponse(
+      "Course rated Successfully",
+      200,
+      course
+    );
   } catch (error) {
     console.error(error);
-    return { success: false, message: "Internal server error." };
+    return responses.buildFailureResponse("Internal Server Error", 500);
   }
-}
+};
 
 module.exports = { getAllCourses, searchCourse, rateCourse };
