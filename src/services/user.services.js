@@ -5,7 +5,7 @@ const response = require("../utils/response");
 const Pin = require("../utils/generateRandomPin");
 const mailUtil = require("../utils/email");
 
-async function signup(payload) {
+const signup = async (payload) => {
   try {
     const { firstName, lastName, email, password } = payload;
 
@@ -20,7 +20,7 @@ async function signup(payload) {
       firstName,
       lastName,
       email,
-      password: hashedPassword,  // Store the hashed password
+      password: hashedPassword, // Store the hashed password
     });
 
     await newUser.save();
@@ -32,14 +32,16 @@ async function signup(payload) {
         expiresIn: "1h", // Token is valid for 1 hour
       }
     );
-    return response.buildSuccessResponse("User created successfully", 201, {token});
+    return response.buildSuccessResponse("User created successfully", 201, {
+      token,
+    });
   } catch (error) {
     console.error(error);
     return response.buildFailureResponse("Server Error", 500);
   }
-}
+};
 
-async function login(payload) {
+const login = async (payload) => {
   try {
     const { email, password } = payload;
 
@@ -56,7 +58,7 @@ async function login(payload) {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, {
       expiresIn: "1h", // Token is valid for 1 hour
     });
-    return response.buildSuccessResponse("Login Successful", 200, {token});
+    return response.buildSuccessResponse("Login Successful", 200, { token });
   } catch (error) {
     console.error(error);
     return {
@@ -64,7 +66,7 @@ async function login(payload) {
       statusCode: 500,
     };
   }
-}
+};
 
 const forgotPassword = async (payload) => {
   try {
@@ -115,14 +117,14 @@ const forgotPassword = async (payload) => {
   }
 };
 
-async function resetPassword (payload) {
+const resetPassword = async (payload) => {
   const { email, resetPin, newPassword } = payload;
 
   try {
     const foundUser = await User.findOne({ email });
 
     if (!foundUser || foundUser.resetPin !== resetPin) {
-      return response.buildFailureResponse("Invalid reset PIN", 400)
+      return response.buildFailureResponse("Invalid reset PIN", 400);
     }
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
@@ -134,7 +136,7 @@ async function resetPassword (payload) {
     return response.buildSuccessResponse("Password reset successful", 200);
   } catch (error) {
     console.error(error);
-    return response.buildFailureResponse("Internal Server Error", 500)
+    return response.buildFailureResponse("Internal Server Error", 500);
   }
 };
 
