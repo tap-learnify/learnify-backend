@@ -34,28 +34,38 @@ async function rateCourse(payload) {
   try {
     const { courseId, studentId, rating } = payload;
 
+    // Find the course by ID
     const course = await Course.findById(courseId);
     if (!course) {
       return { success: false, message: "Course not found." };
     }
 
     // Check if the student has already rated this course
-    const alreadyRated = course.rating.find((rating) =>
+    const alreadyRated = course.ratings.find((rating) =>
       rating.student.equals(studentId)
     );
+
     if (alreadyRated) {
       return { success: false, message: "You have already rated this course." };
     }
 
+    // Validate that the rating is between 1 and 5
+    if (rating < 1 || rating > 5) {
+      return {
+        success: false,
+        message: "Invalid rating. Rating should be between 1 and 5.",
+      };
+    }
+
     // Add the student's rating to the course
-    course.rating.push({ student: studentId, value: rating });
+    course.ratings.push({ student: studentId, value: rating });
 
     // Calculate and update the average rating for the course
-    const totalRating = course.rating.reduce(
+    const totalRatings = course.ratings.reduce(
       (sum, rating) => sum + rating.value,
       0
     );
-    course.rating = totalRating / course.rating.length;
+    course.rating = totalRatings / course.ratings.length;
 
     await course.save();
 
