@@ -32,7 +32,7 @@ const searchCourse = async (query) => {
 
 const rateCourse = async (payload) => {
   try {
-    const { courseId, studentId, rating } = payload;
+    const { courseId, userId, rating } = payload;
 
     // Find the course by ID
     const course = await Course.findById(courseId);
@@ -40,9 +40,9 @@ const rateCourse = async (payload) => {
       return responses.buildFailureResponse("Course not found", 404);
     }
 
-    // Check if the student has already rated this course
+    // Check if the user has already rated this course
     const alreadyRated = course.ratings.find((rating) =>
-      rating.student.equals(studentId)
+      rating.user.equals(userId)
     );
 
     if (alreadyRated) {
@@ -60,8 +60,8 @@ const rateCourse = async (payload) => {
       );
     }
 
-    // Add the student's rating to the course
-    course.ratings.push({ student: studentId, value: rating });
+    // Add the user's rating to the course
+    course.ratings.push({ user: userId, value: rating });
 
     // Calculate and update the average rating for the course
     const totalRatings = course.ratings.reduce(
