@@ -30,56 +30,34 @@ const searchCourse = async (query) => {
   }
 };
 
-const rateCourse = async (payload) => {
+const rateCourse = async (courseId, newRating) => {
   try {
-    const { courseId, userId, rating } = payload;
+    // Validate the rating value to be between 1 and 5
+    if (newRating < 1 || newRating > 5) {
+      return { statusCode: 400, error: "Rating must be between 1 and 5." };
+    }
 
-    // Find the course by ID
+    // Find the course by courseId
     const course = await Course.findById(courseId);
+
     if (!course) {
-      return responses.buildFailureResponse("Course not found", 404);
+      return { statusCode: 404, error: "Course not found." };
     }
 
-    // Check if the user has already rated this course
-    const alreadyRated = course.ratings.find((rating) =>
-      rating.user.equals(userId)
-    );
+    // Update the course's rating
+    const currentRating = course.rating;
+    course.rating = (currentRating + parseFloat(newRating)) / 2;
 
-    if (alreadyRated) {
-      return responses.buildFailureResponse(
-        "You have already rated this course",
-        400
-      );
-    }
+    // Round the updated rating to one decimal place
+    course.rating = Math.round(course.rating * 10) / 10;
 
-    // Validate that the rating is between 1 and 5
-    if (rating < 1 || rating > 5) {
-      return responses.buildFailureResponse(
-        "Rating must be between 1 and 5",
-        400
-      );
-    }
-
-    // Add the user's rating to the course
-    course.ratings.push({ user: userId, value: rating });
-
-    // Calculate and update the average rating for the course
-    const totalRatings = course.ratings.reduce(
-      (sum, rating) => sum + rating.value,
-      0
-    );
-    course.rating = totalRatings / course.ratings.length;
-
+    // Save the updated course
     await course.save();
 
-    return responses.buildSuccessResponse(
-      "Course rated Successfully",
-      200,
-      course
-    );
+    return { statusCode: 200, message: "Course rating updated successfully." };
   } catch (error) {
     console.error(error);
-    return responses.buildFailureResponse("Internal Server Error", 500);
+    return { statusCode: 500, error: "Internal server error." };
   }
 };
 

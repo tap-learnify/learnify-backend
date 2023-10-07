@@ -20,11 +20,14 @@ const searchCourses = async (req, res) => {
 
 const rateCourse = async (req, res) => {
   try {
-    const data = await courseServices.rateCourse(req.body);
-    res.status(data.statusCode).json(data);
+    const courseId = req.params.courseId;
+    const { newRating } = req.body;
+
+    const result = await courseServices.rateCourse(courseId, newRating);
+    res.status(result.statusCode).json(result);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-}
+};
 
 module.exports = { getAllCourses, searchCourses, rateCourse };
