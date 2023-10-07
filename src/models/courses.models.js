@@ -3,12 +3,7 @@ const mongoose = require("mongoose");
 const courseSchema = new mongoose.Schema({
   title: { type: String, required: true },
   level: { type: String, required: true }, // e.g., Beginner, Intermediate, Advanced
-  rating: [
-    {
-      student: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Reference to the user who rated the course
-      value: { type: Number, required: true }, // Rating value
-    },
-  ], // Course rating (an array of objects with student and value fields)
+  rating: { type: Number, default: 0 }, // Course rating (optional, default 0)
   author: {
     authorName: { type: String, required: true },
     authorBio: { type: String, required: true },
